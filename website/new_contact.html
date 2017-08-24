@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+<!-- make sure your have jquery js file linked here -->
+
+
+		<form class="myForm">
+			<input type="text" class="fname" placeholder="Your Name" required />
+			<input type="email" class="email" placeholder="Your Email" required />
+			<textarea class="comment" placeholder="What are your comments"></textarea>
+			<input type="submit" class='submit' value="submit Form" />
+
+			<div class="error" style="display: none;">Sorry! something went wrong. Try again</div>
+			<div class="success" style="display: none;">Message was sent..I'll get back to you</div>
+		</form>
+
+
+
+
+		<script type="text/javascript">
+			$('.myFrom').submit(function(e) {
+				e.preventDefault();
+
+				var name = $('.fname').val();
+				var email = $('.email').val();
+				var comment = $('.comment').val();
+
+				$('.submit').val("Submitting");
+
+				var data = {};
+
+				data.name = name;
+				data.email = email;
+				data.comment = comment;
+
+				$.ajax({
+					url: "newcontact.php",
+					data: data,
+					type: "post",
+					dataType: 'json',
+
+					success: function(data) {
+
+						if(data.Error == 200) {
+							$('.success').show();
+
+							setTimeout(function() {
+								$('.success').hide();
+							}, 3000);
+						}
+						else {
+							$('.error').show();
+
+							setTimeout(function() {
+								$('.error').hide();
+							}, 3000);
+						}
+					}
+
+
+
+				});
+			})
+		</script>
+
+
+</body>
+</html>
